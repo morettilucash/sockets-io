@@ -1,19 +1,32 @@
-// Establecer la conexion
+// Comando para establecer la conexión
 var socket = io();
-var label = $('#lblNuevoTicket')
+
+var label = $('#lblNuevoTicket');
+
 
 socket.on('connect', function() {
-    console.log('Conectado al servidor');    
+    console.log('Conectado al servidor');
 });
 
 socket.on('disconnect', function() {
-    console.log('Desconectado del servidor');    
+    console.log('Desconectado del servidor');
 });
 
-$('button').on('click', function(ticket) {
+// on 'estadoActual'
+socket.on('estadoActual', function(resp) {
 
-    socket.emit('sigTicket', null, function(sigTicket) {
-        label.text(sigTicket);
+    console.log(resp);
+    label.text(resp.actual);
+
+});
+
+
+$('button').on('click', function() {
+
+    socket.emit('siguienteTicket', null, function(siguienteTicket) {
+
+        label.text(siguienteTicket);
+
     });
 
 });
